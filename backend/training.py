@@ -54,6 +54,10 @@ def train_model():
         y = df[TARGET_COL]
 
         # Create a signature for each feature row to prevent duplicate leakage to test set
+
+        # By creating row_signateure , we ensure that the "two Identical rows of dataset should be either in training set or test set" , but not in both sets. 
+        # This is important to prevent data leakage and ensure that the model's performance is evaluated on truly unseen data.
+
         row_signature = pd.util.hash_pandas_object(X, index=False)
 
         # Group-based split (same logic as notebook)
@@ -108,7 +112,9 @@ def train_model():
         test_f1 = f1_score(y_test, y_test_pred)
 
         logging.info(f"Train Accuracy: {train_acc:.4f} | Recall: {train_recall:.4f} | F1: {train_f1:.4f}")
-        logging.info(f"Test  Accuracy: {test_acc:.4f} | Recall: {test_recall:.4f} | F1: {test_f1:.4f}")
+        logging.info(f"Test  Accuracy: {test_acc:.4f} | Recall: {test_recall:.4f} | F1: {test_f1:.4f}") 
+
+        
 
         logging.info("Train Classification Report:\n" + classification_report(y_train, y_train_pred))
         logging.info("Test Classification Report:\n" + classification_report(y_test, y_test_pred))

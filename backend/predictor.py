@@ -27,6 +27,10 @@ logging.basicConfig(
 )
 
 # load the trained model only once (module-level cache)
+
+# Do not load your model inside the predict function, as it will be called for every prediction request, leading to significant performance issues. 
+# Instead, load the model once at the module level, so it is available for all subsequent calls to the predict function without needing to reload it each time.
+
 model = load(MODEL_PATH)
 logging.info("Model loaded successfully.")
 
@@ -37,7 +41,7 @@ def predict(input_data: dict):
     # get predicted class
     prediction = int(model.predict(df)[0])
     # get prediction probability
-    probability = float(model.predict_proba(df)[0][1])
+    probability = float(model.predict_proba(df)[0][1])    # "proba" short form for predicting probability
 
     logging.info(f"Model provided a prediction: {prediction}, probability: {probability}")
 
@@ -47,7 +51,9 @@ def predict(input_data: dict):
     }
 
 
-# example usage
+
+# Example usage :-
+
 # sample_input = {
 #     "age": 52,
 #     "sex": 1,
