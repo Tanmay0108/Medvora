@@ -9,7 +9,7 @@ load_dotenv()
 API_URL = os.getenv("API_URL")
 
 st.set_page_config(
-    page_title="MedBuddy.ML",
+    page_title="MedBuddy.ML",   
     page_icon="⚕️",
     layout="centered"
 )
